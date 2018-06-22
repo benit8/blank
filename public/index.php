@@ -5,6 +5,7 @@ define('ROOT',    str_replace('public/index.php', '', $_SERVER['SCRIPT_FILENAME'
 
 
 require_once(ROOT . "config/config.php");
+require_once(ROOT . "core/Autoloader.php");
 
 require_once(ROOT . "core/App.php");
 require_once(ROOT . "core/Session.php");
@@ -20,3 +21,4 @@ SS::init(['flash' => []]);
 
 
 $app = new App();
+$app->run();
