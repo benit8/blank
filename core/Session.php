@@ -1,13 +1,14 @@
 <?php
 
-class SS
+class Session
 {
-	private function __construct(){}
+	private function __construct()
+	{}
 
 	public static function init($vars)
 	{
 		if (session_status() == PHP_SESSION_ACTIVE)
-			return;
+			return true;
 
 		session_start();
 
@@ -64,7 +65,7 @@ class SS
 	public static function renderFlash()
 	{
 		if (empty($_SESSION['flash']))
-			return;
+			return false;
 
 		foreach ($_SESSION['flash'] as $type => $array) {
 			echo "<div class=\"alert alert-dismissible alert-" . $type . "\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button><ul>";

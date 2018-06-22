@@ -79,7 +79,7 @@ class AuthModel extends Model
 			else {
 				DB::query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
 
-				SS::set('auth', $fetch);
+				Session::set('auth', $fetch);
 				return true;
 			}
 		}

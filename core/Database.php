@@ -4,7 +4,8 @@ class DB
 {
 	private static $pdo;
 
-	private function __construct(){}
+	private function __construct()
+	{}
 
 	public static function set($host, $user, $pass, $dbname)
 	{
@@ -60,7 +61,8 @@ class DB
 		return $result ? $result : false;
 	}
 
-	public static function lastID(){
+	public static function lastID()
+	{
 		return self::$pdo->lastInsertId();
 	}
 }

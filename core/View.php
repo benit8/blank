@@ -21,11 +21,11 @@ class View
 	{
 		extract($this->vars);
 
-		$__controller = $this->view;
-		$__action     = ucfirst($filename);
+		$_controller = $this->view;
+		$_action = ucfirst($filename);
 
 		require_once(ROOT . 'views/layouts/' . $this->layout . '/header.php');
-			SS::renderFlash();
+		Session::renderFlash();
 		require_once(ROOT . 'views/' . $this->view . '/' . $filename . '.php');
 		require_once(ROOT . 'views/layouts/' . $this->layout . '/footer.php');
 	}

@@ -6,12 +6,12 @@ class Auth extends Controller
 
 	public function index()
 	{
-		App::redirect(SS::isLoggedIn() ? "" : "auth/login");
+		App::redirect(Session::isLoggedIn() ? "" : "auth/login");
 	}
 
 	public function login()
 	{
-		if (SS::isLoggedIn())
+		if (Session::isLoggedIn())
 			App::redirect();
 
 		$invalid = false;
@@ -24,7 +24,7 @@ class Auth extends Controller
 				$errors = $this->model->getErrors();
 
 				foreach ($errors as $e)
-					SS::addFlash('danger', $e);
+					Session::addFlash('danger', $e);
 			}
 			else {
 				App::redirect();
@@ -37,7 +37,7 @@ class Auth extends Controller
 
 	public function register()
 	{
-		if (SS::isLoggedIn())
+		if (Session::isLoggedIn())
 			App::redirect();
 
 		$invalid = false;
@@ -50,10 +50,10 @@ class Auth extends Controller
 				$errors = $this->model->getErrors();
 
 				foreach ($errors as $e)
-					SS::addFlash('danger', $e);
+					Session::addFlash('danger', $e);
 			}
 			else {
-				SS::addFlash('success', "Registration successful.");
+				Session::addFlash('success', "Registration successful.");
 				App::redirect();
 			}
 		}
@@ -64,7 +64,7 @@ class Auth extends Controller
 
 	public function logout()
 	{
-		SS::delete('auth');
+		Session::delete('auth');
 		App::redirect();
 	}
 }

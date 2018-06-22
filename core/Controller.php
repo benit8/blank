@@ -6,7 +6,8 @@ class Controller
 	private $view;
 	protected $model;
 
-	public function __construct(){}
+	public function __construct()
+	{}
 
 	public function loadModel($model)
 	{
