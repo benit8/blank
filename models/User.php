@@ -6,11 +6,11 @@ class UserModel extends Model
 
 	public function getUser($id)
 	{
-		return DB::fetchUnique("SELECT * FROM `users` WHERE `id` = ?", [$id]);
+		return Database::fetchUnique("SELECT * FROM `users` WHERE `id` = ?", [$id]);
 	}
 
 	public function getEmail($id)
 	{
-		return DB::fetchUnique("SELECT `email` FROM `users` WHERE `id` = ?", [$id])->email;
+		return Database::fetchUnique("SELECT `email` FROM `users` WHERE `id` = ?", [$id])->email;
 	}
 }

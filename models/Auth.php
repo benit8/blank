@@ -25,7 +25,7 @@ class AuthModel extends Model
 		}
 		else {
 			$data = $fv->getVars();
-			$exists = DB::fetchUnique(
+			$exists = Database::fetchUnique(
 				"SELECT * FROM `users` WHERE email = ?",
 				[$data['email']]
 			);
@@ -35,7 +35,7 @@ class AuthModel extends Model
 				return false;
 			}
 
-			$insert = DB::query(
+			$insert = Database::query(
 				"INSERT INTO `users` VALUES (null, ?, ?, NOW(), null, null, 0)",
 				[$data['email'], $data['password']]
 			);
@@ -62,7 +62,7 @@ class AuthModel extends Model
 		}
 		else {
 			$data = $fv->getVars();
-			$fetch = DB::fetchUnique("SELECT * FROM `users` WHERE `email` = ?", [$data['email']]);
+			$fetch = Database::fetchUnique("SELECT * FROM `users` WHERE `email` = ?", [$data['email']]);
 
 			if (!$fetch) {
 				$this->addError("This email address is not registered.");
@@ -77,7 +77,7 @@ class AuthModel extends Model
 				return false;
 			}
 			else {
-				DB::query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
+				Database::query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
 
 				Session::set('auth', $fetch);
 				return true;
