@@ -30,7 +30,7 @@
 					<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>">Home</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
-					<?php if (!SS::isLoggedIn()): ?>
+					<?php if (!Session::isLoggedIn()): ?>
 						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>auth/login">Login</a></li>
 						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>auth/register">Register</a></li>
 					<?php else: ?>

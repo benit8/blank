@@ -36,7 +36,7 @@ class Session
 
 	public static function isLoggedIn()
 	{
-		return !empty(SS::get('auth'));
+		return !empty(Session::get('auth'));
 	}
 
 	public static function addFlash($type, $message)

@@ -17,7 +17,7 @@ require_once(ROOT . "core/FormValidator.php");
 
 
 DB::set(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-SS::init(['flash' => []]);
+Session::init(['flash' => []]);
 
 
 $app = new App();
