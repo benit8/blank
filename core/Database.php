@@ -33,9 +33,9 @@ class Database
 	}
 
 
-	public function query($queryString, $params = null)
+	public function query($queryString, ...$params)
 	{
-		if ($params == null)
+		if (empty($params))
 			$query = $this->pdo->query($queryString);
 		else {
 			$query = $this->pdo->prepare($queryString);
@@ -45,9 +45,9 @@ class Database
 		return $query;
 	}
 
-	public function fetch($queryString, $params = null)
+	public function fetch($queryString, ...$params)
 	{
-		if ($params == null)
+		if (empty($params))
 			$query = $this->pdo->query($queryString);
 		else {
 			$query = $this->pdo->prepare($queryString);
@@ -57,9 +57,9 @@ class Database
 		return $query->fetchAll();
 	}
 
-	public function fetchUnique($queryString, $params = null)
+	public function fetchUnique($queryString, ...$params)
 	{
-		if ($params == null)
+		if (empty($params))
 			$query = $this->pdo->query($queryString);
 		else {
 			$query = $this->pdo->prepare($queryString);
@@ -70,7 +70,7 @@ class Database
 		return $result ? $result : false;
 	}
 
-	public function lastID()
+	public function getLastInsertId()
 	{
 		return $this->pdo->lastInsertId();
 	}

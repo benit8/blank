@@ -32,7 +32,7 @@ class Auth extends \Core\Model
 			$data = $fv->getVars();
 			$exists = $this->db->fetchUnique(
 				"SELECT * FROM `users` WHERE email = ?",
-				[$data['email']]
+				$data['email']
 			);
 
 			if ($exists) {
@@ -42,7 +42,7 @@ class Auth extends \Core\Model
 
 			$insert = $this->db->query(
 				"INSERT INTO `users` VALUES (null, ?, ?, NOW(), null, null, 0)",
-				[$data['email'], $data['password']]
+				$data['email'], $data['password']
 			);
 
 			if ($insert) {
@@ -67,7 +67,7 @@ class Auth extends \Core\Model
 		}
 		else {
 			$data = $fv->getVars();
-			$fetch = $this->db->fetchUnique("SELECT * FROM `users` WHERE `email` = ?", [$data['email']]);
+			$fetch = $this->db->fetchUnique("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
 
 			if (!$fetch) {
 				$this->addError("This email address is not registered.");
@@ -82,7 +82,7 @@ class Auth extends \Core\Model
 				return false;
 			}
 			else {
-				$this->db->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
+				$this->db->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", $fetch->id);
 
 				Session::set('auth', $fetch);
 				return true;
