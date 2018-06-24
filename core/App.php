@@ -1,5 +1,10 @@
 <?php
 
+namespace Core;
+
+use \Core\Session;
+use \App\Controllers\Error404;
+
 class App
 {
 	private $parameters;
@@ -8,6 +13,8 @@ class App
 
 	public function __construct()
 	{
+		Session::init(['flash' => []]);
+
 		$this->parseURL();
 	}
 
@@ -34,6 +41,8 @@ class App
 
 		$this->controller = !empty($this->parameters[0]) ? ucfirst($this->parameters[0]) : 'Index';
 		$this->action = $this->parameters[1] ?? 'index';
+
+		$this->controller = "\\App\\Controllers\\$this->controller";
 
 		array_shift($this->parameters);
 	}

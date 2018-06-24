@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Controller
 {
 	private $vars = [];
@@ -11,9 +13,9 @@ class Controller
 
 	public function loadModel($model)
 	{
-		require_once(ROOT . "models/$model.php");
+		require_once(ROOT . "App/Models/$model.php");
 
-		$name = $model . 'Model';
+		$name = "\\App\\Models\\$model";
 		$this->model = new $name();
 	}
 
@@ -24,7 +26,8 @@ class Controller
 
 	public function render($filename, $layout = 'default')
 	{
-		$this->view = new View(get_class($this), $layout);
+		$parts = explode('\\', get_class($this));
+		$this->view = new View(end($parts), $layout);
 		$this->view->setVars($this->vars);
 		$this->view->render($filename);
 	}

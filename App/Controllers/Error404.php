@@ -1,6 +1,8 @@
 <?php
 
-class Index extends Controller
+namespace App\Controllers;
+
+class Error404 extends \Core\Controller
 {
 	public function __construct(){}
 

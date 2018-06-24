@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class View
 {
 	private $view;
@@ -24,9 +26,9 @@ class View
 		$_controller = $this->view;
 		$_action = ucfirst($filename);
 
-		require_once(ROOT . 'views/layouts/' . $this->layout . '/header.php');
+		require_once(ROOT . 'App/Views/layouts/' . $this->layout . '/header.php');
 		Session::renderFlash();
-		require_once(ROOT . 'views/' . $this->view . '/' . $filename . '.php');
-		require_once(ROOT . 'views/layouts/' . $this->layout . '/footer.php');
+		require_once(ROOT . 'App/Views/' . $this->view . '/' . $filename . '.php');
+		require_once(ROOT . 'App/Views/layouts/' . $this->layout . '/footer.php');
 	}
 }

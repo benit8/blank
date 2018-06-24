@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Validators;
+
 class FormValidator
 {
 	private $vars;

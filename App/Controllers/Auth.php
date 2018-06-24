@@ -1,6 +1,11 @@
 <?php
 
-class Auth extends Controller
+namespace App\Controllers;
+
+use \Core\App;
+use \Core\Session;
+
+class Auth extends \Core\Controller
 {
 	public function __construct(){}
 

@@ -4,7 +4,7 @@
 		<hr>
 
 		<footer class="container mb-3">
-			<span>&copy; <?= SITE_NAME ?> 2018</span>
+			<span>&copy; <?= \Core\Config::site['title'] ?> 2018</span>
 		</footer>
 
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

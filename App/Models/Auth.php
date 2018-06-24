@@ -1,13 +1,18 @@
 <?php
 
-class AuthModel extends Model
-{
-	private $errors;
+namespace App\Models;
 
+use \App\Validators\FormValidator;
+use \Core\Database;
+use \Core\Session;
+
+class Auth extends \Core\Model
+{
+	private $errors = [];
 
 	public function __construct()
 	{
-		$this->errors = [];
+		parent::__construct();
 	}
 
 	public function register()
@@ -25,7 +30,7 @@ class AuthModel extends Model
 		}
 		else {
 			$data = $fv->getVars();
-			$exists = Database::fetchUnique(
+			$exists = $this->db->fetchUnique(
 				"SELECT * FROM `users` WHERE email = ?",
 				[$data['email']]
 			);
@@ -35,7 +40,7 @@ class AuthModel extends Model
 				return false;
 			}
 
-			$insert = Database::query(
+			$insert = $this->db->query(
 				"INSERT INTO `users` VALUES (null, ?, ?, NOW(), null, null, 0)",
 				[$data['email'], $data['password']]
 			);
@@ -62,7 +67,7 @@ class AuthModel extends Model
 		}
 		else {
 			$data = $fv->getVars();
-			$fetch = Database::fetchUnique("SELECT * FROM `users` WHERE `email` = ?", [$data['email']]);
+			$fetch = $this->db->fetchUnique("SELECT * FROM `users` WHERE `email` = ?", [$data['email']]);
 
 			if (!$fetch) {
 				$this->addError("This email address is not registered.");
@@ -77,7 +82,7 @@ class AuthModel extends Model
 				return false;
 			}
 			else {
-				Database::query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
+				$this->db->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", [$fetch->id]);
 
 				Session::set('auth', $fetch);
 				return true;
