@@ -25,7 +25,7 @@ class Database
 		}
 	}
 
-	public static function get_instance()
+	public static function getInstance()
 	{
 		if (!isset(self::$_instance))
 			self::$_instance = new Database();
@@ -67,7 +67,7 @@ class Database
 		}
 
 		$result = $query->fetch();
-		return $result ? $result : false;
+		return $result ?: false;
 	}
 
 	public function getLastInsertId()

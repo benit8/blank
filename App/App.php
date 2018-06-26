@@ -1,9 +1,9 @@
 <?php
 
-namespace Core;
+namespace App;
 
+use Controllers\Error404;
 use \Core\Session;
-use \App\Controllers\Error404;
 
 class App
 {
@@ -13,8 +13,6 @@ class App
 
 	public function __construct()
 	{
-		Session::init(['flash' => []]);
-
 		$this->parseURL();
 	}
 
@@ -36,7 +34,7 @@ class App
 
 	private function parseURL()
 	{
-		$route = isset($_GET['route']) ? $_GET['route'] : "";
+		$route = $_GET['route'] ?? "";
 		$this->parameters = array_filter(explode('/', $route));
 
 		$this->controller = !empty($this->parameters[0]) ? ucfirst($this->parameters[0]) : 'Index';

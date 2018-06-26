@@ -7,22 +7,23 @@ class Session
 	private function __construct()
 	{}
 
-	public static function init($vars)
+	public static function init($vars = [])
 	{
 		if (session_status() == PHP_SESSION_ACTIVE)
 			return true;
 
 		session_start();
 
+		self::set('flash', []);
 		foreach ($vars as $key => $value) {
 			if (!isset($_SESSION[$key]))
-				$_SESSION[$key] = $value;
+				self::set($key, $value);
 		}
 	}
 
 	public static function get($var)
 	{
-		return isset($_SESSION[$var]) ? $_SESSION[$var] : false;
+		return $_SESSION[$var] ?? null;
 	}
 
 	public static function set($var, $val)
@@ -38,7 +39,7 @@ class Session
 
 	public static function isLoggedIn()
 	{
-		return !empty(Session::get('auth'));
+		return !empty(self::get('auth'));
 	}
 
 	public static function addFlash($type, $message)
