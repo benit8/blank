@@ -7,7 +7,9 @@ require_once(ROOT . "core/Autoload.php");
 
 ///////////////////////////////////////////////////////////////////////////////
 
-\Core\Session::init();
 
-$app = new \App\App();
+$app = new App\App();
+
+$app->get('/', []);
+
 $app->run();
