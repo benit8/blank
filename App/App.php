@@ -11,6 +11,7 @@ class App
 
 	private static $httpMethods = [
 		'GET',
+		'HEAD',
 		'POST',
 		'PUT',
 		'PATCH',
