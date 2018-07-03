@@ -45,6 +45,7 @@ class Router
 
 	private function notFound()
 	{
+		header("HTTP/1.0 404 Not Found");
 		(new Error404())->index();
 		die;
 	}
