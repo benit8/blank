@@ -32,21 +32,25 @@ class Router
 		$uriPath = parse_url($uri, PHP_URL_PATH);
 		$uriPath = '/' . ltrim($uriPath, '/');
 
+		$ret = true;
 		foreach ($this->routes[$method] as $pattern => $route) {
 			$pattern = '#^' . $pattern . '$#';
 			if (preg_match($pattern, $uriPath, $parameters)) {
 				array_shift($parameters);
-				return $route->run($parameters);
+				$ret = $route->run($parameters);
+				break;
 			}
 		}
 
-		$this->notFound();
+		if ($ret === false)
+			$this->notFound($method);
 	}
 
-	private function notFound()
+	private function notFound($method)
 	{
-		header("HTTP/1.0 404 Not Found");
-		(new Error404())->index();
+		header("HTTP/1.0 404 Not Found", true, 404);
+		if ($method === 'GET')
+			(new Error404)->index();
 		die;
 	}
 }
