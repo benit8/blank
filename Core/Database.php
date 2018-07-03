@@ -54,10 +54,11 @@ class Database
 			$query->execute($params);
 		}
 
-		return $query->fetchAll();
+		$result = $query->fetch();
+		return $result ?: false;
 	}
 
-	public function fetchUnique($queryString, ...$params)
+	public function fetchAll($queryString, ...$params)
 	{
 		if (empty($params))
 			$query = $this->pdo->query($queryString);
@@ -66,8 +67,7 @@ class Database
 			$query->execute($params);
 		}
 
-		$result = $query->fetch();
-		return $result ?: false;
+		return $query->fetchAll();
 	}
 
 	public function getLastInsertId()
