@@ -23,6 +23,6 @@ class Route
 		if (!method_exists($controller, $this->action))
 			return false;
 
-		return call_user_func_array([$controller, $this->action], $parameters);
+		return call_user_func_array([$controller, $this->action], $parameters) ?? true;
 	}
 }
