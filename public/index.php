@@ -8,7 +8,7 @@ require_once(ROOT . "core/Autoload.php");
 ///////////////////////////////////////////////////////////////////////////////
 
 
-$app = new App\App();
+$app = new Core\App();
 
 $app->get('/', []);
 

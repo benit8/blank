@@ -1,9 +1,6 @@
 <?php
 
-namespace App;
-
-use \Core\Session;
-use \Core\Router;
+namespace Core;
 
 class App
 {
