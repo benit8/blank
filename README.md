@@ -1,2 +1,2 @@
 # Blank
-Little personnal framework made for starting web projects
+Personnal little framework made for starting web projects
