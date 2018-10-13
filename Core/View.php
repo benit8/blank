@@ -23,13 +23,19 @@ class View
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	public function loadStyle($style)
+	public function loadStyle($style, bool $isFullPath = false)
 	{
+		if ($isFullPath === false)
+			$style = "css/$style";
+
 		$this->files['styles'][] = WEBROOT . $style;
 	}
 
-	public function loadScript($script)
+	public function loadScript($script, bool $isFullPath = false)
 	{
+		if ($isFullPath === false)
+			$style = "js/$style";
+
 		$this->files['scripts'][] = WEBROOT . $script;
 	}
 

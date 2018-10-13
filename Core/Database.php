@@ -27,7 +27,7 @@ class Database
 
 	public static function getInstance()
 	{
-		if (!isset(self::$_instance))
+		if (self::$_instance === null)
 			self::$_instance = new Database();
 		return self::$_instance;
 	}
@@ -36,38 +36,46 @@ class Database
 	public function query($queryString, ...$params)
 	{
 		if (empty($params))
-			$query = $this->pdo->query($queryString);
+			$ret = $this->pdo->query($queryString);
 		else {
 			$query = $this->pdo->prepare($queryString);
-			$query->execute($params);
+			$ret = $query->execute($params);
 		}
 
-		return $query;
+		return $ret;
 	}
 
 	public function fetch($queryString, ...$params)
 	{
-		if (empty($params))
-			$query = $this->pdo->query($queryString);
+		if (empty($params)) {
+			$stmt = $this->pdo->query($queryString);
+			if ($stmt === false)
+				return false;
+		}
 		else {
-			$query = $this->pdo->prepare($queryString);
-			$query->execute($params);
+			$stmt = $this->pdo->prepare($queryString);
+			if (!$stmt->execute($params))
+				return false;
 		}
 
-		$result = $query->fetch();
+		$result = $stmt->fetch();
 		return $result ?: false;
 	}
 
 	public function fetchAll($queryString, ...$params)
 	{
-		if (empty($params))
-			$query = $this->pdo->query($queryString);
+		if (empty($params)) {
+			$stmt = $this->pdo->query($queryString);
+			if ($stmt === false)
+				return false;
+		}
 		else {
-			$query = $this->pdo->prepare($queryString);
-			$query->execute($params);
+			$stmt = $this->pdo->prepare($queryString);
+			if (!$stmt->execute($params))
+				return false;
 		}
 
-		return $query->fetchAll();
+		return $stmt->fetchAll();
 	}
 
 	public function getLastInsertId()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:og="http://ogp.me/ns#">
+<html>
 	<head>
 		<title><?= \Core\Config::site['title'] ?></title>
 

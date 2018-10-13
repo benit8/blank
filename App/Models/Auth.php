@@ -41,11 +41,11 @@ class Auth extends \Core\Model
 			}
 
 			$insert = $this->db->query(
-				"INSERT INTO `users` VALUES (null, ?, ?, NOW(), null, null, 0)",
+				"INSERT INTO `users` (`email`, `password`) VALUES (?, ?)",
 				$data['email'], $data['password']
 			);
 
-			if ($insert) {
+			if (!$insert) {
 				$this->addError("Database error.");
 				return false;
 			}

@@ -57,6 +57,8 @@ class FormValidator
 	{
 		if (!preg_match("/^[a-z0-9!\"#$%]{8,16}$/i", $this->vars[$key]))
 			$this->setError($key, "field must be between 8 and 16 characters long and may only contain letters, numbers and the following special characters: !\"#$%");
+		else
+			$this->vars[$key] = hash('sha256', $this->vars[$key]);
 	}
 
 	public function epur($key)
