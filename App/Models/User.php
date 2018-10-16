@@ -11,11 +11,11 @@ class User extends \Core\Model
 
 	public function getUser($id)
 	{
-		return $this->db->fetchUnique("SELECT * FROM `users` WHERE `id` = ?", $id);
+		return $this->db->fetch("SELECT * FROM `users` WHERE `id` = ?", $id);
 	}
 
 	public function getEmail($id)
 	{
-		return $this->db->fetchUnique("SELECT `email` FROM `users` WHERE `id` = ?", $id)->email;
+		return $this->db->fetch("SELECT `email` FROM `users` WHERE `id` = ?", $id)->email;
 	}
 }

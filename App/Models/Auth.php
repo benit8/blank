@@ -30,7 +30,7 @@ class Auth extends \Core\Model
 		}
 		else {
 			$data = $fv->getVars();
-			$exists = $this->db->fetchUnique(
+			$exists = $this->db->fetch(
 				"SELECT * FROM `users` WHERE email = ?",
 				$data['email']
 			);
@@ -67,7 +67,7 @@ class Auth extends \Core\Model
 		}
 		else {
 			$data = $fv->getVars();
-			$fetch = $this->db->fetchUnique("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
+			$fetch = $this->db->fetch("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
 
 			if (!$fetch) {
 				$this->addError("This email address is not registered.");
@@ -98,7 +98,7 @@ class Auth extends \Core\Model
 
 	private function addError($error)
 	{
-		if (gettype($error) === "array")
+		if (is_array($error))
 			$this->errors = array_merge($this->errors, $error);
 		else
 			$this->errors[] = strval($error);

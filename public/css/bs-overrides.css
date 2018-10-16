@@ -1,0 +1,80 @@
+/* Bootstrap overrides
+----------------------------------------- */
+
+body > nav.navbar + main.container {
+	margin-top: 4.5rem;
+}
+
+body > nav.navbar + main:not(.container) {
+	margin-top: 3.5rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-animation: autofill 0s forwards;
+	animation: autofill 0s forwards;
+}
+
+img {
+	max-width: 100%;
+}
+
+textarea {
+	resize: vertical;
+}
+
+table.table {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+
+table.table.mytable tr th:not(:first-child),
+table.table.mytable tr td:not(:first-child) {
+	text-align: center;
+}
+
+.alert ul {
+	list-style-type: none;
+	margin-bottom: 0px;
+	padding-left: 10px;
+}
+
+.card > .card-header > h1, .card > .card-header > h2,
+.card > .card-header > h3, .card > .card-header > h4,
+.card > .card-header > h5, .card > .card-header > h6 {
+	display: inline;
+	margin-bottom: 0px;
+}
+
+.progress {
+	position: relative;
+}
+
+.progress span {
+	position: absolute;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+
+/* Keyframes
+----------------------------------------- */
+
+@keyframes autofill
+{
+	100% {
+		background: transparent;
+		color: inherit;
+	}
+}
+
+@-webkit-keyframes autofill
+{
+	100% {
+		background: transparent;
+		color: inherit;
+	}
+}

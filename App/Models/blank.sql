@@ -2,8 +2,8 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-CREATE DATABASE `blank3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `blank3`;
+CREATE DATABASE `blank` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `blank`;
 
 
 CREATE TABLE `users` (

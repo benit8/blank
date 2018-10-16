@@ -13,8 +13,9 @@
 		<meta property="og:image" content="<?= WEBROOT ?>images/og.png">
 		<meta property="og:url" content="<?= \Core\Config::site['url'] ?>">
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+		<link rel="stylesheet" href="<?= WEBROOT ?>css/bs-overrides.css">
 		<link rel="stylesheet" href="<?= WEBROOT ?>css/default.css">
 		<link rel="icon" href="<?= WEBROOT ?>images/favicon.ico"/>
 	</head>
@@ -26,18 +27,16 @@
 			</button>
 
 			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>">Home</a></li>
-				</ul>
+				<ul class="navbar-nav mr-auto"></ul>
 				<ul class="navbar-nav ml-auto">
 					<?php if (!\Core\Session::isLoggedIn()): ?>
-						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>auth/login">Login</a></li>
-						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>auth/register">Register</a></li>
+						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>login">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="<?= WEBROOT ?>register">Register</a></li>
 					<?php else: ?>
 						<li class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">(You)</a>
 							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="<?= WEBROOT ?>auth/logout">Logout</a>
+								<a class="dropdown-item" href="<?= WEBROOT ?>logout">Logout</a>
 							</div>
 						</li>
 					<?php endif; ?>
@@ -45,5 +44,4 @@
 			</div>
 		</nav>
 
-		<main role="main">
-			<div class="container">
+		<main role="main" class="container">

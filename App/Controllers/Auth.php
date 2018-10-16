@@ -7,12 +7,7 @@ use \Core\Session;
 
 class Auth extends \Core\Controller
 {
-	public function __construct(){}
-
-	public function index()
-	{
-		App::redirect(Session::isLoggedIn() ? "" : "auth/login");
-	}
+	public function __construct() {}
 
 	public function login()
 	{
