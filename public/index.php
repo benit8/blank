@@ -12,10 +12,9 @@ $app = new Core\App();
 
 
 $app->get('/', []);
-
+$app->get('/logout', ['Auth', 'logout']);
 $app->map(['get', 'post'], '/login', ['Auth', 'login']);
 $app->map(['get', 'post'], '/register', ['Auth', 'register']);
-$app->map(['get'], '/logout', ['Auth', 'logout']);
 
 
 $app->run();
