@@ -35,12 +35,20 @@ class Database
 
 	public function query($queryString, ...$params)
 	{
+		/// In case we get an associative array
+		if (is_array($params[0]))
+			$params = $params[0];
+
 		$sth = $this->pdo->prepare($queryString);
 		return $sth->execute($params) ? $sth->rowCount() : false;
 	}
 
 	public function fetch($queryString, ...$params)
 	{
+		/// In case we get an associative array
+		if (is_array($params[0]))
+			$params = $params[0];
+
 		$sth = $this->pdo->prepare($queryString);
 		if ($sth->execute($params) === false)
 			throw new Exception('\Core\Database::fetch() failed: ' . print_r($sth->errorInfo(), 1));
@@ -50,6 +58,10 @@ class Database
 
 	public function fetchAll($queryString, ...$params)
 	{
+		/// In case we get an associative array
+		if (is_array($params[0]))
+			$params = $params[0];
+
 		$sth = $this->pdo->prepare($queryString);
 		if ($sth->execute($params) === false)
 			throw new Exception('\Core\Database::fetchAll() failed: ' . print_r($sth->errorInfo(), 1));
@@ -57,7 +69,7 @@ class Database
 		return $sth->fetchAll();
 	}
 
-	public function lastInsertId()
+	public function getLastInsertId()
 	{
 		return $this->pdo->lastInsertId();
 	}

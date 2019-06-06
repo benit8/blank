@@ -7,7 +7,10 @@ use \Core\Session;
 
 class Auth extends \Core\Controller
 {
-	public function __construct() {}
+	public function __construct()
+	{
+		$this->loadModel('Auth');
+	}
 
 	public function login()
 	{
@@ -17,8 +20,6 @@ class Auth extends \Core\Controller
 		$invalid = false;
 
 		if (!empty($_POST)) {
-			$this->loadModel('Auth');
-
 			if (!$this->model->login()) {
 				$invalid = true;
 				$errors = $this->model->getErrors();
@@ -43,8 +44,6 @@ class Auth extends \Core\Controller
 		$invalid = false;
 
 		if (!empty($_POST)) {
-			$this->loadModel('Auth');
-
 			if (!$this->model->register()) {
 				$invalid = true;
 				$errors = $this->model->getErrors();
