@@ -50,6 +50,7 @@ class Controller
 			$ext = pathinfo($filepath, PATHINFO_EXTENSION);
 			switch ($ext) {
 				case 'css':
+				case 'less':
 					$this->view->loadStyle($file);
 					break;
 				case 'js':

@@ -57,9 +57,9 @@ class App
 			die;
 	}
 
-	public static function redirect($url = '')
+	public static function redirect($url = '/')
 	{
-		header("Location: " . WEBROOT . $url);
+		header('Location: ' . $url);
 		die;
 	}
 }
