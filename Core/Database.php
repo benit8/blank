@@ -35,50 +35,29 @@ class Database
 
 	public function query($queryString, ...$params)
 	{
-		if (empty($params))
-			$ret = $this->pdo->query($queryString);
-		else {
-			$query = $this->pdo->prepare($queryString);
-			$ret = $query->execute($params);
-		}
-
-		return $ret;
+		$sth = $this->pdo->prepare($queryString);
+		return $sth->execute($params) ? $sth->rowCount() : false;
 	}
 
 	public function fetch($queryString, ...$params)
 	{
-		if (empty($params)) {
-			$stmt = $this->pdo->query($queryString);
-			if ($stmt === false)
-				return false;
-		}
-		else {
-			$stmt = $this->pdo->prepare($queryString);
-			if (!$stmt->execute($params))
-				return false;
-		}
+		$sth = $this->pdo->prepare($queryString);
+		if ($sth->execute($params) === false)
+			throw new Exception('\Core\Database::fetch() failed: ' . print_r($sth->errorInfo(), 1));
 
-		$result = $stmt->fetch();
-		return $result ?: false;
+		return $sth->fetch();
 	}
 
 	public function fetchAll($queryString, ...$params)
 	{
-		if (empty($params)) {
-			$stmt = $this->pdo->query($queryString);
-			if ($stmt === false)
-				return false;
-		}
-		else {
-			$stmt = $this->pdo->prepare($queryString);
-			if (!$stmt->execute($params))
-				return false;
-		}
+		$sth = $this->pdo->prepare($queryString);
+		if ($sth->execute($params) === false)
+			throw new Exception('\Core\Database::fetchAll() failed: ' . print_r($sth->errorInfo(), 1));
 
-		return $stmt->fetchAll();
+		return $sth->fetchAll();
 	}
 
-	public function getLastInsertId()
+	public function lastInsertId()
 	{
 		return $this->pdo->lastInsertId();
 	}

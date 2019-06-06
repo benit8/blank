@@ -30,25 +30,27 @@ class Auth extends \Core\Model
 		}
 		else {
 			$data = $fv->getVars();
-			$exists = $this->db->fetch(
-				"SELECT * FROM `users` WHERE email = ?",
-				$data['email']
-			);
 
-			if ($exists) {
+			$record = $this->db->fetch("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
+			if ($record) {
 				$this->addError("This email address is already registered.");
 				return false;
 			}
 
-			$insert = $this->db->query(
+			$insertion = $this->db->query(
 				"INSERT INTO `users` (`email`, `password`) VALUES (?, ?)",
 				$data['email'], $data['password']
 			);
+			$loggin = $this->db->query(
+				"INSERT INTO `logs` VALUES (NOW(), ?, 'registration', ?)",
+				$this->db->lastInsertId(), ""/* TODO: Random token */
+			);
 
-			if (!$insert) {
+			if ($insertion === false || $loggin === false) {
 				$this->addError("Database error.");
 				return false;
 			}
+
 
 			return true;
 		}
@@ -67,24 +69,27 @@ class Auth extends \Core\Model
 		}
 		else {
 			$data = $fv->getVars();
-			$fetch = $this->db->fetch("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
 
-			if (!$fetch) {
+			$record = $this->db->fetch("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
+			if (!$record) {
 				$this->addError("This email address is not registered.");
 				return false;
 			}
-			else if ($fetch->password != $data['password']) {
+			else if ($record->password !== $data['password']) {
 				$this->addError("Invalid login informations.");
 				return false;
 			}
-			else if ($fetch->confirmed == null) {
+			else if ($record->confirmed === '0') {
 				$this->addError("You must confirm your account before loggin in.");
 				return false;
 			}
 			else {
-				$this->db->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?", $fetch->id);
+				$this->db->query("
+					INSERT INTO `logs` VALUES (NOW(), ?, 'login', ?)",
+					$record->id, $_SERVER['REMOTE_ADDR']
+				);
 
-				Session::set('auth', $fetch);
+				Session::set('auth', $record);
 				return true;
 			}
 		}
