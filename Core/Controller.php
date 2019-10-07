@@ -7,7 +7,7 @@ class Controller
 	protected $model;
 	private $view;
 	private $vars = [];
-	private $files = [];
+	private $files = ['styles' => [], 'scripts' => []];
 
 	public function __construct()
 	{}
@@ -25,12 +25,14 @@ class Controller
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	public function loadFile($file)
+	public function loadStyles(array $files)
 	{
-		if (is_array($file))
-			$this->files = array_merge($this->files, $file);
-		else
-			$this->files = array_merge($this->files, [$file]);
+		$this->files->styles = array_merge($this->files->styles, $files);
+	}
+
+	public function loadScripts(array $files)
+	{
+		$this->files->scripts = array_merge($this->files->scripts, $files);
 	}
 
 	public function render($filename, $layout = 'default')
@@ -45,20 +47,12 @@ class Controller
 
 	private function passFilesToView()
 	{
-		foreach ($this->files as $file) {
-			$filepath = ROOT . "public/$file";
-			$ext = pathinfo($filepath, PATHINFO_EXTENSION);
-			switch ($ext) {
-				case 'css':
-				case 'less':
-					$this->view->loadStyle($file);
-					break;
-				case 'js':
-					$this->view->loadScript($file);
-					break;
-				default:
-					break;
+		foreach ($this->files as $fileType => $files) {
+			foreach ($files as $file) {
+				$file = ROOT . 'public/' . $fileType . '/' . $file;
 			}
 		}
+
+		$this->view->setCustomFiles($this->files);
 	}
 }

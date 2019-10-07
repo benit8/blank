@@ -7,10 +7,7 @@ class View
 	private $view;
 	private $layout;
 	private $vars = [];
-	private $files = [
-		'styles' => [],
-		'scripts' => []
-	];
+	private $files = [];
 
 	public function __construct($controllerName, $layout = 'default')
 	{
@@ -23,14 +20,9 @@ class View
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	public function loadStyle($style)
+	public function setCustomFiles(array $files)
 	{
-		$this->files['styles'][] = WEBROOT . $style;
-	}
-
-	public function loadScript($script)
-	{
-		$this->files['scripts'][] = WEBROOT . $script;
+		$this->files = $files;
 	}
 
 	public function render($filename)
