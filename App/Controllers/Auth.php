@@ -25,14 +25,14 @@ class Auth extends \Core\Controller
 				$errors = $this->model->getErrors();
 
 				foreach ($errors as $e)
-					Session::addFlash('danger', $e);
+					Session::addFlash('_danger', $e);
 			}
 			else {
 				App::redirect();
 			}
 		}
 
-		$this->setVars(["invalid" => $invalid]);
+		$this->setVars(['invalid' => $invalid]);
 		$this->render('login');
 	}
 
@@ -49,15 +49,15 @@ class Auth extends \Core\Controller
 				$errors = $this->model->getErrors();
 
 				foreach ($errors as $e)
-					Session::addFlash('danger', $e);
+					Session::addFlash('_danger', $e);
 			}
 			else {
-				Session::addFlash('success', "Registration successful.");
+				Session::addFlash('_success', 'Registration successful.');
 				App::redirect();
 			}
 		}
 
-		$this->setVars(["invalid" => $invalid]);
+		$this->setVars(['invalid' => $invalid]);
 		$this->render('register');
 	}
 

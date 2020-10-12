@@ -6,19 +6,12 @@ class App
 {
 	private $router;
 
-	private static $httpMethods = [
-		'GET',
-		'HEAD',
-		'POST',
-		'PUT',
-		'PATCH',
-		'DELETE',
-		'OPTIONS'
-	];
+	const HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
 
 	public function __construct()
 	{
-		Session::init();
+		if (!Session::init())
+			throw new Exception("Could not initialize session");
 
 		$this->router = new Router();
 	}
@@ -30,13 +23,13 @@ class App
 
 		$ucName = strtoupper($name);
 
-		if (in_array($ucName, self::$httpMethods))
+		if (in_array($ucName, self::HTTP_METHODS))
 			$this->map([$ucName], $arguments[0], $arguments[1]);
 	}
 
 	public function any($pattern, $callback)
 	{
-		$this->map(self::$httpMethods, $pattern, $callback);
+		$this->map(self::HTTP_METHODS, $pattern, $callback);
 	}
 
 	public function map(array $methods, $pattern, $callback)

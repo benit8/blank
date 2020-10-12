@@ -14,9 +14,9 @@ class Controller
 
 	public function loadModel($model, ...$args)
 	{
-		require_once(ROOT . "App/Models/$model.php");
+		require_once(ROOT . '/App/Models/' . $model . '.php');
 
-		$name = "\\App\\Models\\$model";
+		$name = '\\App\\Models\\' . $model;
 		$this->model = new $name(...$args);
 	}
 
@@ -49,7 +49,8 @@ class Controller
 	{
 		foreach ($this->files as $fileType => $files) {
 			foreach ($files as $file) {
-				$file = ROOT . 'public/' . $fileType . '/' . $file;
+				if (filter_var($file, FILTER_VALIDATE_URL) === false)
+					$file = WEBROOT . '/' . $fileType . '/' . $file;
 			}
 		}
 

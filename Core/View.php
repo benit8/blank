@@ -33,9 +33,8 @@ class View
 		extract($this->vars);
 		extract($this->files);
 
-		require(ROOT . 'App/Views/layouts/' . $this->layout . '/header.php');
-		Session::renderFlash();
-		require(ROOT . 'App/Views/' . $this->view . '/' . $filename . '.php');
-		require(ROOT . 'App/Views/layouts/' . $this->layout . '/footer.php');
+		require(ROOT . '/App/Views/layouts/' . $this->layout . '/header.php');
+		require(ROOT . '/App/Views/' . $this->view . '/' . $filename . '.php');
+		require(ROOT . '/App/Views/layouts/' . $this->layout . '/footer.php');
 	}
 }

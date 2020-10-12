@@ -1,12 +1,14 @@
 /* Bootstrap overrides
 ----------------------------------------- */
 
-body > nav.navbar + main.container {
-	margin-top: 4.5rem;
-}
+body > nav.navbar + main {
+	&.container {
+		margin-top: 4.5rem;
+	}
 
-body > nav.navbar + main:not(.container) {
-	margin-top: 3.5rem;
+	&:not(.container) {
+		margin-top: 3.5rem;
+	}
 }
 
 input:-webkit-autofill,
@@ -41,22 +43,25 @@ table.table.mytable tr td:not(:first-child) {
 	padding-left: 10px;
 }
 
-.card > .card-header > h1, .card > .card-header > h2,
-.card > .card-header > h3, .card > .card-header > h4,
-.card > .card-header > h5, .card > .card-header > h6 {
+.card > .card-header > h1,
+.card > .card-header > h2,
+.card > .card-header > h3,
+.card > .card-header > h4,
+.card > .card-header > h5,
+.card > .card-header > h6 {
 	display: inline;
 	margin-bottom: 0px;
 }
 
 .progress {
 	position: relative;
-}
 
-.progress span {
-	position: absolute;
-	display: block;
-	width: 100%;
-	text-align: center;
+	& span {
+		position: absolute;
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
 }
 
 
@@ -64,14 +69,6 @@ table.table.mytable tr td:not(:first-child) {
 ----------------------------------------- */
 
 @keyframes autofill
-{
-	100% {
-		background: transparent;
-		color: inherit;
-	}
-}
-
-@-webkit-keyframes autofill
 {
 	100% {
 		background: transparent;

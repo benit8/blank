@@ -13,8 +13,8 @@ class Database
 	{
 		try {
 			$this->pdo = new PDO(
-				"mysql:host=" . Config::database['host'] . ";dbname=" . Config::database['name'],
-				Config::database['user'], Config::database['pass'],
+				"mysql:host=" . Config::database()->host . ";dbname=" . Config::database()->name,
+				Config::database()->user, Config::database()->pass,
 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
 			);
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -51,7 +51,7 @@ class Database
 
 		$sth = $this->pdo->prepare($queryString);
 		if ($sth->execute($params) === false)
-			throw new Exception('\Core\Database::fetch() failed: ' . print_r($sth->errorInfo(), 1));
+			throw new Exception('\Core\Database::fetch() failed: ' . print_r($sth->errorInfo(), true));
 
 		return $sth->fetch();
 	}
@@ -64,12 +64,12 @@ class Database
 
 		$sth = $this->pdo->prepare($queryString);
 		if ($sth->execute($params) === false)
-			throw new Exception('\Core\Database::fetchAll() failed: ' . print_r($sth->errorInfo(), 1));
+			throw new Exception('\Core\Database::fetchAll() failed: ' . print_r($sth->errorInfo(), true));
 
 		return $sth->fetchAll();
 	}
 
-	public function getLastInsertId()
+	public function lastInsertId()
 	{
 		return $this->pdo->lastInsertId();
 	}

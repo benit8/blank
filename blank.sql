@@ -13,8 +13,8 @@ CREATE TABLE `users` (
 	`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`email` varchar(255) NOT NULL UNIQUE,
 	`password` varchar(64) NOT NULL,
-	`joindate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`confirmed` tinyint(1) NOT NULL DEFAULT '0',
+	`joined_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`is_confirmed` tinyint(1) NOT NULL DEFAULT '0',
 	`level` tinyint(4) NOT NULL DEFAULT '0',
 
 	PRIMARY KEY (`id`)
@@ -24,9 +24,9 @@ CREATE TABLE `users` (
 
 CREATE TABLE `logs` (
 	`timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`user` int(11) UNSIGNED NOT NULL,
-	`type` enum('registration', 'login', 'passwordReset') NOT NULL,
+	`user_id` int(11) UNSIGNED NOT NULL,
+	`type` enum('registration', 'login', 'password_reset') NOT NULL,
 	`data` text NULL,
 
-	FOREIGN KEY (`user`) REFERENCES `users`(`id`)
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

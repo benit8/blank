@@ -43,11 +43,11 @@ class Auth extends \Core\Model
 			);
 			$loggin = $this->db->query(
 				"INSERT INTO `logs` VALUES (NOW(), ?, 'registration', ?)",
-				$this->db->lastInsertId(), ""/* TODO: Random token */
+				$this->db->lastInsertId(), $this->generateRandomToken()
 			);
 
 			if ($insertion === false || $loggin === false) {
-				$this->addError("Database error.");
+				$this->addError('Database error.');
 				return false;
 			}
 
@@ -72,15 +72,15 @@ class Auth extends \Core\Model
 
 			$record = $this->db->fetch("SELECT * FROM `users` WHERE `email` = ?", $data['email']);
 			if (!$record) {
-				$this->addError("This email address is not registered.");
+				$this->addError('This email address is not registered.');
 				return false;
 			}
 			else if ($record->password !== $data['password']) {
-				$this->addError("Invalid login informations.");
+				$this->addError('Invalid login informations.');
 				return false;
 			}
 			else if ($record->confirmed === '0') {
-				$this->addError("You must confirm your account before loggin in.");
+				$this->addError('You must confirm your account before loggin in.');
 				return false;
 			}
 			else {

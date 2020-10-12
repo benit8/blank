@@ -3,7 +3,7 @@
 		<hr>
 
 		<footer class="container mb-3">
-			<span>&copy; <?= \Core\Config::site['title'] ?> <?= date('Y') ?></span>
+			<span>&copy; <?= \Core\Config::site()->title ?> <?= date('Y') ?></span>
 		</footer>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

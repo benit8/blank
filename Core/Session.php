@@ -7,33 +7,38 @@ class Session
 	private function __construct()
 	{}
 
-	public static function init($vars = [])
+	public static function init(array $vars = [])
 	{
 		if (session_status() == PHP_SESSION_ACTIVE)
 			return true;
 
-		session_start();
+		if (!session_start())
+			return false;
 
-		self::set('flash', []);
-		foreach ($vars as $key => $value) {
-			if (!isset($_SESSION[$key]))
-				self::set($key, $value);
-		}
+		$_SESSION = array_merge($_SESSION, $vars);
+		if (!self::contains('flash'))
+			self::set('flash', []);
+		return true;
 	}
 
-	public static function get($var)
+	public static function contains(string $var): bool
+	{
+		return isset($_SESSION[$var]);
+	}
+
+	public static function get(string $var)
 	{
 		return $_SESSION[$var] ?? null;
 	}
 
-	public static function set($var, $val)
+	public static function set(string $var, $val)
 	{
 		$_SESSION[$var] = $val;
 	}
 
 	public static function delete($var)
 	{
-		if (isset($_SESSION[$var]))
+		if (self::contains($var))
 			unset($_SESSION[$var]);
 	}
 
@@ -42,41 +47,47 @@ class Session
 		return !empty(self::get('auth'));
 	}
 
-	public static function addFlash($type, $message)
+	public static function addFlash(string $type, $message)
 	{
-		switch ($type) {
-			case 'success':
-				$message = "<i class=\"fa fa-smile-o\"></i>&nbsp&nbsp" . $message;
-			break;
-			case 'info':
-				$message = "<i class=\"fa fa-info-circle\"></i>&nbsp&nbsp" . $message;
-			break;
-			case 'warning':
-				$message = "<i class=\"fa fa-frown-o\"></i>&nbsp&nbsp" . $message;
-			break;
-			case 'danger':
-				$message = "<i class=\"fa fa-ban\"></i>&nbsp&nbsp" . $message;
-			break;
-			default:
-				return false;
-			break;
-		}
+		if (!isset($_SESSION['flash'][$key]))
+			$_SESSION['flash'][$key] = [];
 
-		$_SESSION['flash'][$type][] = $message;
+		if (is_array($message))
+			$_SESSION['flash'][$key] = array_merge($_SESSION['flash'][$key], $message);
+		else
+			$_SESSION['flash'][$key][] = $message;
 	}
 
-	public static function renderFlash()
+	public static function hasFlash(string $key = null): bool
 	{
-		if (empty($_SESSION['flash']))
-			return false;
+		return $key === null ? !empty($_SESSION['flash']) : !empty($_SESSION['flash'][$key]);
+	}
 
-		foreach ($_SESSION['flash'] as $type => $array) {
-			echo "<div class=\"alert alert-dismissible alert-" . $type . "\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button><ul>";
-			foreach ($array as $k => $value)
-				echo '<li>' . $value . '</li>';
-			echo "</ul></div>";
+	public static function dumpFlash(string $key, string $format = "<p>%s</p>")
+	{
+		if (!self::hasFlash($key))
+			return;
+
+		foreach ($_SESSION['flash'][$key] as $flash) {
+			printf($format, $flash);
 		}
 
-		$_SESSION['flash'] = [];
+		unset($_SESSION['flash'][$key]);
+	}
+
+	public static function dumpGlobalFlash()
+	{
+		$globalTypes = ['_error', '_warning', '_success', '_info'];
+
+		foreach ($globalTypes as $type) {
+			if (!self::hasFlash($type))
+				continue;
+
+			foreach ($_SESSION['flash'][$type] as $flash) {
+				echo '<div class="flash ' . substr($type, 1) . '"><span>' . $flash . '</span></div>';
+			}
+
+			unset($_SESSION['flash'][$type]);
+		}
 	}
 }
